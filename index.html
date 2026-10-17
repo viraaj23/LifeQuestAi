@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LifeQuest AI helps you explore possible outcomes before making a decision." />
+  <title>LifeQuest AI — Explore Your Next Move</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="LifeQuest AI home">
+      <span class="brand-mark">LQ</span>
+      <span>LifeQuest<span class="brand-ai">AI</span></span>
+    </a>
+    <span class="event-tag"><span class="live-dot"></span> Hackloop project</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span>✦</span> THINK AHEAD. CHOOSE BETTER.</div>
+      <h1>Your next decision<br />could change <span>everything.</span></h1>
+      <p class="hero-copy">Life is full of what-ifs. Describe a situation, explore possible consequences, and make your next move with a little more clarity.</p>
+    </section>
+
+    <section class="workspace" aria-labelledby="workspace-title">
+      <div class="workspace-heading">
+        <div>
+          <p class="section-kicker">YOUR DECISION LAB</p>
+          <h2 id="workspace-title">What are you thinking about?</h2>
+        </div>
+        <span class="step-pill">01 / REFLECT</span>
+      </div>
+
+      <form id="decision-form">
+        <label for="decision">The decision</label>
+        <textarea id="decision" name="decision" rows="3" placeholder="e.g. Should I spend the next month learning web development or preparing for an exam?" required></textarea>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="context">Your current situation <span class="optional">(optional)</span></label>
+            <input id="context" name="context" type="text" placeholder="e.g. I have 2 hours free each day" />
+          </div>
+          <div class="field">
+            <label for="timeframe">Timeframe</label>
+            <select id="timeframe" name="timeframe">
+              <option value="short term">Short term — days or weeks</option>
+              <option value="medium term" selected>Medium term — months</option>
+              <option value="long term">Long term — years</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="primary-button" type="submit">
+          Explore possible outcomes <span aria-hidden="true">↗</span>
+        </button>
+        <p class="privacy-note">A thinking aid, not a prediction. Your choices remain yours.</p>
+      </form>
+
+      <section id="results" class="results" aria-live="polite" hidden>
+        <div class="results-top">
+          <div>
+            <p class="section-kicker">YOUR QUEST OUTLOOK</p>
+            <h3>Possible paths to consider</h3>
+          </div>
+          <span class="sparkle">✦</span>
+        </div>
+        <p class="demo-notice">Demo preview · Connect an AI API to generate personalized outcomes.</p>
+        <div class="outcome-grid">
+          <article class="outcome-card">
+            <span class="outcome-icon">↗</span>
+            <h4>If it goes well</h4>
+            <p id="positive-text">You may build momentum and learn something useful by taking a thoughtful first step.</p>
+          </article>
+          <article class="outcome-card">
+            <span class="outcome-icon">◈</span>
+            <h4>Things to watch</h4>
+            <p id="challenge-text">Time, effort, and unexpected changes could affect the result. Think about what you can realistically manage.</p>
+          </article>
+          <article class="outcome-card">
+            <span class="outcome-icon">◎</span>
+            <h4>A balanced next step</h4>
+            <p id="next-text">Try a small, reversible step first. Set a check-in date and review what you learn before committing further.</p>
+          </article>
+        </div>
+        <button id="reset-button" class="secondary-button" type="button">Try another decision ↺</button>
+      </section>
+    </section>
+
+    <section class="how-section">
+      <p class="section-kicker">A LITTLE CLARITY GOES A LONG WAY</p>
+      <div class="how-grid">
+        <div><span>01</span><h3>Describe it</h3><p>Put the choice and your situation into words.</p></div>
+        <div><span>02</span><h3>Explore it</h3><p>Consider benefits, trade-offs, and uncertainties.</p></div>
+        <div><span>03</span><h3>Choose your move</h3><p>Use the reflection to plan a practical next step.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand footer-brand" href="#"><span class="brand-mark">LQ</span><span>LifeQuest<span class="brand-ai">AI</span></span></a>
+    <p>Built for Hackloop · Imagine the possibilities, own your choices.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
