@@ -1,12 +1,14 @@
-
 from fastapi import FastAPI
-from app.game import router as game_router
 from fastapi.middleware.cors import CORSMiddleware
+
+from app.game import router as game_router
+
 app = FastAPI(
     title="LifeQuest AI",
     description="AI-powered life decision simulator",
     version="1.0.0",
 )
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
