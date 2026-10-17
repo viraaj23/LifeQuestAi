@@ -1,109 +1,151 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="LifeQuest AI helps you explore possible outcomes before making a decision." />
-  <title>LifeQuest AI — Explore Your Next Move</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LifeQuest AI — Your Story Awaits</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="ambient ambient-one"></div>
   <div class="ambient ambient-two"></div>
+  <div class="stars"></div>
 
-  <header class="topbar">
-    <a class="brand" href="#" aria-label="LifeQuest AI home">
-      <span class="brand-mark">LQ</span>
-      <span>LifeQuest<span class="brand-ai">AI</span></span>
-    </a>
-    <span class="event-tag"><span class="live-dot"></span> Hackloop project</span>
-  </header>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#top">
+        <span class="brand-mark">✦</span>
+        <span><strong>LIFEQUEST <i>AI</i></strong><small>Your choices. Your story.</small></span>
+      </a>
 
-  <main>
-    <section class="hero">
-      <div class="eyebrow"><span>✦</span> THINK AHEAD. CHOOSE BETTER.</div>
-      <h1>Your next decision<br />could change <span>everything.</span></h1>
-      <p class="hero-copy">Life is full of what-ifs. Describe a situation, explore possible consequences, and make your next move with a little more clarity.</p>
-    </section>
-
-    <section class="workspace" aria-labelledby="workspace-title">
-      <div class="workspace-heading">
-        <div>
-          <p class="section-kicker">YOUR DECISION LAB</p>
-          <h2 id="workspace-title">What are you thinking about?</h2>
-        </div>
-        <span class="step-pill">01 / REFLECT</span>
+      <div class="profile">
+        <div class="avatar">V</div>
+        <div><strong>Vinith</strong><small>Level <span id="level">02</span> · Wayfinder</small></div>
       </div>
 
-      <form id="decision-form">
-        <label for="decision">The decision</label>
-        <textarea id="decision" name="decision" rows="3" placeholder="e.g. Should I spend the next month learning web development or preparing for an exam?" required></textarea>
+      <div class="xp-row"><span>EXPERIENCE</span><span><b id="xp">120</b> XP</span></div>
+      <div class="xp-track"><span id="xpBar"></span></div>
+      <div class="xp-caption"><span>LEVEL PROGRESS</span><span id="xpProgress">20 / 100</span></div>
 
-        <div class="field-row">
-          <div class="field">
-            <label for="context">Your current situation <span class="optional">(optional)</span></label>
-            <input id="context" name="context" type="text" placeholder="e.g. I have 2 hours free each day" />
-          </div>
-          <div class="field">
-            <label for="timeframe">Timeframe</label>
-            <select id="timeframe" name="timeframe">
-              <option value="short term">Short term — days or weeks</option>
-              <option value="medium term" selected>Medium term — months</option>
-              <option value="long term">Long term — years</option>
-            </select>
-          </div>
-        </div>
+      <div class="stats">
+        <div class="stat"><span>✧</span><span>Wisdom</span><b id="wisdom">60</b></div>
+        <div class="stat"><span>ϟ</span><span>Energy</span><b id="energy">70</b></div>
+        <div class="stat"><span>◈</span><span>Time</span><b id="time">20h</b></div>
+        <div class="stat"><span>◉</span><span>Gold</span><b id="gold">250</b></div>
+      </div>
 
-        <button class="primary-button" type="submit">
-          Explore possible outcomes <span aria-hidden="true">↗</span>
-        </button>
-        <p class="privacy-note">A thinking aid, not a prediction. Your choices remain yours.</p>
-      </form>
+      <nav>
+        <button class="nav-item active" data-tab="map">⌖ Realm map</button>
+        <button class="nav-item" data-tab="quests">⚑ Quests <em id="questCount">4</em></button>
+        <button class="nav-item" data-tab="chronicle">▤ Chronicle</button>
+      </nav>
 
-      <section id="results" class="results" aria-live="polite" hidden>
-        <div class="results-top">
-          <div>
-            <p class="section-kicker">YOUR QUEST OUTLOOK</p>
-            <h3>Possible paths to consider</h3>
-          </div>
-          <span class="sparkle">✦</span>
+      <div class="sidebar-bottom"><span class="live-dot"></span> YOUR STORY IS IN PROGRESS</div>
+    </aside>
+
+    <main class="main" id="top">
+      <header class="topbar">
+        <div><div class="eyebrow"><span class="live-dot"></span> THE REALM AWAITS</div><h1 id="pageTitle">Choose your next chapter.</h1></div>
+        <button class="icon-button" id="soundToggle">♫ <span>Ambience</span></button>
+      </header>
+
+      <section class="hero">
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <div class="chapter-tag">✧ CHAPTER II · THE CROSSROADS</div>
+          <h2>Fate is not given.<br><i>It is forged.</i></h2>
+          <p>Every choice shapes the person you become. What will you do with the hours ahead?</p>
+          <button class="primary-button" id="beginBtn">Continue your journey <span>↗</span></button>
         </div>
-        <p class="demo-notice">Demo preview · Connect an AI API to generate personalized outcomes.</p>
-        <div class="outcome-grid">
-          <article class="outcome-card">
-            <span class="outcome-icon">↗</span>
-            <h4>If it goes well</h4>
-            <p id="positive-text">You may build momentum and learn something useful by taking a thoughtful first step.</p>
-          </article>
-          <article class="outcome-card">
-            <span class="outcome-icon">◈</span>
-            <h4>Things to watch</h4>
-            <p id="challenge-text">Time, effort, and unexpected changes could affect the result. Think about what you can realistically manage.</p>
-          </article>
-          <article class="outcome-card">
-            <span class="outcome-icon">◎</span>
-            <h4>A balanced next step</h4>
-            <p id="next-text">Try a small, reversible step first. Set a check-in date and review what you learn before committing further.</p>
-          </article>
-        </div>
-        <button id="reset-button" class="secondary-button" type="button">Try another decision ↺</button>
+        <div class="hero-caption">ELDERMERE · THE REALM AWAITS · YEAR 02</div>
+        <div class="fog fog-a"></div><div class="fog fog-b"></div>
       </section>
-    </section>
 
-    <section class="how-section">
-      <p class="section-kicker">A LITTLE CLARITY GOES A LONG WAY</p>
-      <div class="how-grid">
-        <div><span>01</span><h3>Describe it</h3><p>Put the choice and your situation into words.</p></div>
-        <div><span>02</span><h3>Explore it</h3><p>Consider benefits, trade-offs, and uncertainties.</p></div>
-        <div><span>03</span><h3>Choose your move</h3><p>Use the reflection to plan a practical next step.</p></div>
-      </div>
-    </section>
-  </main>
+      <section class="content-grid">
+        <div class="realm-panel panel" id="realmPanel">
+          <div class="section-head">
+            <div><div class="eyebrow">EXPLORE YOUR WORLD</div><h3>The known realm</h3></div>
+            <span class="map-stamp">✦ CARTOGRAPHER'S EDITION</span>
+          </div>
 
-  <footer>
-    <a class="brand footer-brand" href="#"><span class="brand-mark">LQ</span><span>LifeQuest<span class="brand-ai">AI</span></span></a>
-    <p>Built for Hackloop · Imagine the possibilities, own your choices.</p>
-  </footer>
+          <div class="map" id="map">
+            <div class="map-terrain terrain-one"></div>
+            <div class="map-terrain terrain-two"></div>
+            <svg class="routes" viewBox="0 0 700 340" preserveAspectRatio="none">
+              <path class="route route-main" d="M115 235 C180 205 210 150 300 162 S425 205 500 105 S595 75 625 90"/>
+              <path class="route route-alt" d="M115 235 C205 280 300 290 365 250 S450 200 500 105"/>
+            </svg>
+
+            <button class="map-point point-village selected" data-place="village">
+              <span class="point-glyph">⌂</span><span class="point-label">Riverside Village</span><small>SAFE HAVEN</small>
+            </button>
+            <button class="map-point point-castle" data-place="castle">
+              <span class="point-glyph">♜</span><span class="point-label">Eldermere Castle</span><small>MAIN QUEST</small>
+            </button>
+            <button class="map-point point-forest" data-place="forest">
+              <span class="point-glyph">♧</span><span class="point-label">Whispering Forest</span><small>DISCOVERY</small>
+            </button>
+            <button class="map-point point-ruins" data-place="ruins">
+              <span class="point-glyph">✹</span><span class="point-label">Shadow Ruins</span><small id="ruinsLabel">LOCKED · LV. 4</small>
+            </button>
+
+            <div class="map-compass">N<br><b>✥</b><br>S</div>
+            <div class="map-footer"><span>✧ MAP FRAGMENT I</span><span>Choose a destination ↗</span></div>
+          </div>
+        </div>
+
+        <aside class="quest-panel panel" id="questPanel">
+          <div class="section-head">
+            <div><div class="eyebrow">ACTIVE QUEST</div><h3 id="questTitle">A New Beginning</h3></div>
+            <span class="quest-seal">✦</span>
+          </div>
+          <div class="quest-image" id="questImage"></div>
+          <div class="quest-meta"><span>◷ Story event</span><span>✧ Adventure</span></div>
+          <p id="questDescription">A traveller arrives at Riverside Village.</p>
+          <div class="reward-line"><span>Possible reward</span><b id="questReward">+15 XP · +10 Wisdom</b></div>
+          <button class="primary-button full" id="travelBtn">Enter this chapter <span>→</span></button>
+        </aside>
+      </section>
+
+      <section class="decision panel" id="decision">
+        <div class="decision-art"><div class="art-rune">✧</div><span>THE MOMENT<br>OF CHOICE</span></div>
+        <div class="decision-copy">
+          <div class="eyebrow">YOUR NEXT DECISION</div>
+          <h3 id="decisionTitle">A stranger asks for your help.</h3>
+          <p id="decisionText">Choose your path carefully. Each action changes your journey.</p>
+          <div class="outcome" id="outcome"></div>
+        </div>
+        <div class="choices" id="choices">
+          <button class="choice-button recommended" data-choice="help"><span class="choice-icon">✧</span><span><b>Help the traveller</b><small>Gain wisdom · Spend energy</small></span><span>↗</span></button>
+          <button class="choice-button" data-choice="study"><span class="choice-icon">▤</span><span><b>Study at the archive</b><small>Build skills · Use some time</small></span><span>↗</span></button>
+          <button class="choice-button" data-choice="rest"><span class="choice-icon">☾</span><span><b>Rest until morning</b><small>Restore energy · Spend time</small></span><span>↗</span></button>
+        </div>
+      </section>
+
+      <footer><span>✦ LIFEQUEST AI</span><span>YOUR LIFE. YOUR CHOICES. YOUR STORY.</span><span id="saveState">LOCAL SAVE READY</span></footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast">
+    <span class="toast-icon">✦</span>
+    <div><b id="toastTitle">Quest updated</b><small id="toastText">Your story has changed.</small></div>
+    <button class="toast-x" id="toastClose">×</button>
+  </div>
+
+  <div class="modal-backdrop" id="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModal">×</button>
+      <div class="modal-rune">✦</div>
+      <div class="eyebrow" id="modalEyebrow">CHAPTER UPDATED</div>
+      <h2 id="modalTitle">Your choice echoes.</h2>
+      <p id="modalText">A new path has opened in your story.</p>
+      <div class="modal-reward" id="modalReward">+15 XP</div>
+      <button class="primary-button" id="continueBtn">Continue <span>→</span></button>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

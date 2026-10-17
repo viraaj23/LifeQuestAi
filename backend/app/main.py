@@ -1,6 +1,5 @@
 
 from fastapi import FastAPI
-
 from app.game import router as game_router
 
 app = FastAPI(
@@ -15,7 +14,7 @@ app.include_router(game_router)
 @app.get("/")
 def home():
     return {
-        "message": "LifeQuest AI backend is running!",
+        "message": "Life Quest AI backend is running!",
         "status": "success",
     }
 
