@@ -4,301 +4,146 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LifeQuestAI | Chronicle of Your Destiny</title>
+  <title>LifeQuest AI — Your Story Awaits</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="ambient ambient-one"></div>
   <div class="ambient ambient-two"></div>
+  <div class="stars"></div>
 
-  <header class="topbar">
-    <a class="brand" href="#" aria-label="LifeQuestAI home">
-      <div class="brand-emblem">♜</div>
-      <div>
-        <div class="brand-name">LIFEQUEST<span>AI</span></div>
-        <div class="brand-subtitle">CHRONICLES OF YOUR DESTINY</div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#top">
+        <span class="brand-mark">✦</span>
+        <span><strong>LIFEQUEST <i>AI</i></strong><small>Your choices. Your story.</small></span>
+      </a>
+
+      <div class="profile">
+        <div class="avatar">V</div>
+        <div><strong>Vinith</strong><small>Level <span id="level">02</span> · Wayfinder</small></div>
       </div>
-    </a>
 
-    <nav class="top-nav">
-      <a class="nav-link active" href="#kingdom">The Kingdom</a>
-      <a class="nav-link" href="#decisions">Your Choices</a>
-      <a class="nav-link" href="#chronicle">Chronicle</a>
-    </nav>
+      <div class="xp-row"><span>EXPERIENCE</span><span><b id="xp">120</b> XP</span></div>
+      <div class="xp-track"><span id="xpBar"></span></div>
+      <div class="xp-caption"><span>LEVEL PROGRESS</span><span id="xpProgress">20 / 100</span></div>
 
-    <div class="player-chip">
-      <div class="avatar">V</div>
-      <div class="player-copy">
-        <strong>THE WAYFARER</strong>
-        <span>Level <b id="level">01</b> Adventurer</span>
+      <div class="stats">
+        <div class="stat"><span>✧</span><span>Wisdom</span><b id="wisdom">60</b></div>
+        <div class="stat"><span>ϟ</span><span>Energy</span><b id="energy">70</b></div>
+        <div class="stat"><span>◈</span><span>Time</span><b id="time">20h</b></div>
+        <div class="stat"><span>◉</span><span>Gold</span><b id="gold">250</b></div>
       </div>
-    </div>
-  </header>
 
-  <main class="page-shell">
-    <section class="hero" id="kingdom">
-      <div class="hero-copy">
-        <div class="eyebrow"><span class="eyebrow-line"></span> YOUR STORY BEGINS HERE</div>
-        <h1>Fate is not given.<br><span>It is forged.</span></h1>
-        <p>Every choice opens a path. Every sacrifice changes your future. Enter your own living simulation and discover where your decisions may lead.</p>
-        <a class="gold-button" href="#decisions">Begin your journey <span>↗</span></a>
-      </div>
-      <div class="hero-crest">
-        <div class="crest-ring">
-          <span class="crest-star">✦</span>
-          <span class="crest-symbol">♜</span>
-          <span class="crest-motto">CHOOSE · RISK · RISE</span>
+      <nav>
+        <button class="nav-item active" data-tab="map">⌖ Realm map</button>
+        <button class="nav-item" data-tab="quests">⚑ Quests <em id="questCount">4</em></button>
+        <button class="nav-item" data-tab="chronicle">▤ Chronicle</button>
+      </nav>
+
+      <div class="sidebar-bottom"><span class="live-dot"></span> YOUR STORY IS IN PROGRESS</div>
+    </aside>
+
+    <main class="main" id="top">
+      <header class="topbar">
+        <div><div class="eyebrow"><span class="live-dot"></span> THE REALM AWAITS</div><h1 id="pageTitle">Choose your next chapter.</h1></div>
+        <button class="icon-button" id="soundToggle">♫ <span>Ambience</span></button>
+      </header>
+
+      <section class="hero">
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <div class="chapter-tag">✧ CHAPTER II · THE CROSSROADS</div>
+          <h2>Fate is not given.<br><i>It is forged.</i></h2>
+          <p>Every choice shapes the person you become. What will you do with the hours ahead?</p>
+          <button class="primary-button" id="beginBtn">Continue your journey <span>↗</span></button>
         </div>
-      </div>
-      <div class="hero-footer">
-        <span><i class="status-dot"></i> THE REALM AWAITS YOUR DECISION</span>
-        <span>CHAPTER I <b>—</b> THE FIRST CHOICE</span>
-      </div>
-    </section>
+        <div class="hero-caption">ELDERMERE · THE REALM AWAITS · YEAR 02</div>
+        <div class="fog fog-a"></div><div class="fog fog-b"></div>
+      </section>
 
-    <section class="section-heading">
-      <div>
-        <div class="eyebrow">YOUR CHARACTER</div>
-        <h2>The state of your realm</h2>
-      </div>
-      <span class="small-label">UPDATED AFTER EACH CHOICE</span>
-    </section>
-
-    <section class="stats-grid" aria-label="Character stats">
-      <article class="stat-card">
-        <div class="stat-top"><span>✧</span><span class="stat-name">SKILL</span><span class="stat-icon">⌁</span></div>
-        <div class="stat-number"><strong id="skills">35</strong><small>/ 100</small></div>
-        <div class="stat-track"><span id="skills-bar" style="width:35%"></span></div>
-        <p>Knowledge, ability and mastery</p>
-      </article>
-      <article class="stat-card">
-        <div class="stat-top"><span>◷</span><span class="stat-name">TIME</span><span class="stat-icon">⌛</span></div>
-        <div class="stat-number"><strong id="time">70</strong><small>/ 100</small></div>
-        <div class="stat-track"><span id="time-bar" style="width:70%"></span></div>
-        <p>Your remaining free-time reserve</p>
-      </article>
-      <article class="stat-card">
-        <div class="stat-top"><span>✦</span><span class="stat-name">ENERGY</span><span class="stat-icon">ϟ</span></div>
-        <div class="stat-number"><strong id="energy">65</strong><small>/ 100</small></div>
-        <div class="stat-track"><span id="energy-bar" style="width:65%"></span></div>
-        <p>Focus, motivation and stamina</p>
-      </article>
-      <article class="stat-card">
-        <div class="stat-top"><span>◈</span><span class="stat-name">GOLD</span><span class="stat-icon">♙</span></div>
-        <div class="stat-number"><strong id="gold">40</strong><small>/ 100</small></div>
-        <div class="stat-track"><span id="gold-bar" style="width:40%"></span></div>
-        <p>Your available resources</p>
-      </article>
-    </section>
-
-    <section class="game-grid">
-      <article class="map-panel">
-        <div class="panel-heading">
-          <div>
-            <div class="eyebrow">EXPLORE YOUR POSSIBILITIES</div>
-            <h2>The Realm of Choices</h2>
+      <section class="content-grid">
+        <div class="realm-panel panel" id="realmPanel">
+          <div class="section-head">
+            <div><div class="eyebrow">EXPLORE YOUR WORLD</div><h3>The known realm</h3></div>
+            <span class="map-stamp">✦ CARTOGRAPHER'S EDITION</span>
           </div>
-          <span class="map-stamp">MAP I</span>
-        </div>
 
-        <div class="map-art">
-          <svg class="realm-map" viewBox="0 0 600 410" role="img" aria-label="Illustrated map of a fictional kingdom with three quest locations">
-            <defs>
-              <pattern id="paperGrain" width="17" height="17" patternUnits="userSpaceOnUse">
-                <circle cx="3" cy="5" r=".7" fill="#967d53" opacity=".24"/>
-                <circle cx="13" cy="12" r=".5" fill="#967d53" opacity=".2"/>
-              </pattern>
-              <filter id="mapShadow" x="-50%" y="-50%" width="200%" height="200%">
-                <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#17110a" flood-opacity=".35"/>
-              </filter>
-            </defs>
-            <rect width="600" height="410" fill="#c9b58a"/>
-            <rect width="600" height="410" fill="url(#paperGrain)"/>
+          <div class="map" id="map">
+            <div class="map-terrain terrain-one"></div>
+            <div class="map-terrain terrain-two"></div>
+            <svg class="routes" viewBox="0 0 700 340" preserveAspectRatio="none">
+              <path class="route route-main" d="M115 235 C180 205 210 150 300 162 S425 205 500 105 S595 75 625 90"/>
+              <path class="route route-alt" d="M115 235 C205 280 300 290 365 250 S450 200 500 105"/>
+            </svg>
 
-            <g fill="none" stroke="#8f7955" stroke-width="1.3" opacity=".5">
-              <path d="M-10 65 Q70 20 140 70 T285 58 T440 75 T630 40"/>
-              <path d="M-10 73 Q70 28 140 78 T285 66 T440 83 T630 48"/>
-              <path d="M-10 82 Q70 37 140 87 T285 75 T440 92 T630 57"/>
-              <path d="M30 340 Q95 290 155 332 T290 340 T430 310 T610 348"/>
-              <path d="M30 350 Q95 300 155 342 T290 350 T430 320 T610 358"/>
-              <path d="M30 360 Q95 310 155 352 T290 360 T430 330 T610 368"/>
-            </g>
+            <button class="map-point point-village selected" data-place="village">
+              <span class="point-glyph">⌂</span><span class="point-label">Riverside Village</span><small>SAFE HAVEN</small>
+            </button>
+            <button class="map-point point-castle" data-place="castle">
+              <span class="point-glyph">♜</span><span class="point-label">Eldermere Castle</span><small>MAIN QUEST</small>
+            </button>
+            <button class="map-point point-forest" data-place="forest">
+              <span class="point-glyph">♧</span><span class="point-label">Whispering Forest</span><small>DISCOVERY</small>
+            </button>
+            <button class="map-point point-ruins" data-place="ruins">
+              <span class="point-glyph">✹</span><span class="point-label">Shadow Ruins</span><small id="ruinsLabel">LOCKED · LV. 4</small>
+            </button>
 
-            <g fill="#85795d" opacity=".7">
-              <path d="M80 138 l25 -48 22 33 19 -57 35 63 22 -22 29 48 -152 -17z"/>
-              <path d="M95 135 l10 -20 9 13 12 -23 15 25z" fill="#e5d4ad"/>
-              <path d="M380 300 l26 -52 23 31 22 -64 35 69 23 -24 26 46 -155 -6z"/>
-              <path d="M397 295 l9 -19 10 13 13 -30 15 29z" fill="#e5d4ad"/>
-            </g>
-
-            <path d="M-10 260 C80 220 95 300 170 263 S260 210 300 252 S400 325 465 260 S545 220 615 246" fill="none" stroke="#7f9a91" stroke-width="19" opacity=".6"/>
-            <path d="M-10 260 C80 220 95 300 170 263 S260 210 300 252 S400 325 465 260 S545 220 615 246" fill="none" stroke="#d8d0ad" stroke-width="2" opacity=".8"/>
-
-            <g fill="none" stroke="#6f5a3e" stroke-width="2" stroke-dasharray="4 7" opacity=".9">
-              <path d="M132 210 Q210 155 295 195 T468 140"/>
-              <path d="M295 195 Q320 255 390 295"/>
-            </g>
-
-            <g fill="#6d6046" opacity=".8" font-family="Cinzel,serif" font-size="10" letter-spacing="2">
-              <text x="30" y="35">THE NORTHERN REACHES</text>
-              <text x="370" y="390">THE SOUTHERN MARCH</text>
-              <text x="33" y="390" font-size="9">HERE BE UNKNOWN PATHS</text>
-            </g>
-
-            <g transform="translate(530 55)" stroke="#5b4b34" fill="none" stroke-width="1.5">
-              <path d="M0 26 L0 -3 L-7 14 L0 9 L7 14 Z" fill="#5b4b34"/>
-              <circle r="22" fill="none" opacity=".6"/>
-              <text x="0" y="-10" text-anchor="middle" fill="#5b4b34" stroke="none" font-size="10" font-family="Cinzel,serif">N</text>
-            </g>
-
-            <g class="map-location selected" data-location="library" role="button" tabindex="0" aria-label="Select the Ancient Library" transform="translate(132 210)" filter="url(#mapShadow)">
-              <circle class="pin-halo" r="28"/>
-              <circle class="pin-ring" r="20"/>
-              <circle class="pin-core" r="13"/>
-              <text class="pin-glyph" y="5" text-anchor="middle">⌘</text>
-              <text class="map-label" x="0" y="42" text-anchor="middle">ANCIENT LIBRARY</text>
-            </g>
-            <g class="map-location" data-location="forge" role="button" tabindex="0" aria-label="Select the Inventor's Forge" transform="translate(295 195)" filter="url(#mapShadow)">
-              <circle class="pin-halo" r="28"/>
-              <circle class="pin-ring" r="20"/>
-              <circle class="pin-core" r="13"/>
-              <text class="pin-glyph" y="5" text-anchor="middle">⚒</text>
-              <text class="map-label" x="0" y="42" text-anchor="middle">INVENTOR'S FORGE</text>
-            </g>
-            <g class="map-location" data-location="court" role="button" tabindex="0" aria-label="Select the Royal Court" transform="translate(468 140)" filter="url(#mapShadow)">
-              <circle class="pin-halo" r="28"/>
-              <circle class="pin-ring" r="20"/>
-              <circle class="pin-core" r="13"/>
-              <text class="pin-glyph" y="5" text-anchor="middle">♜</text>
-              <text class="map-label" x="0" y="42" text-anchor="middle">ROYAL COURT</text>
-            </g>
-
-            <g transform="translate(40 95)" fill="none" stroke="#6e5839" stroke-width="1.4" opacity=".8">
-              <circle r="17"/><circle r="12"/><path d="M-22 0H22 M0 -22V22 M-15 -15L15 15 M15 -15L-15 15"/>
-            </g>
-            <text x="40" y="124" text-anchor="middle" fill="#6e5839" font-family="Cinzel,serif" font-size="8">THE OLD SEAL</text>
-          </svg>
-          <div class="map-caption"><span>✦</span> A thousand paths. One life to live.</div>
-        </div>
-
-        <div class="location-details">
-          <div class="location-icon" id="location-icon">⌘</div>
-          <div class="location-copy">
-            <span class="eyebrow">CURRENT DESTINATION</span>
-            <h3 id="location-title">The Ancient Library</h3>
-            <p id="location-description">Knowledge is a weapon. Train your mind before the next challenge arrives.</p>
+            <div class="map-compass">N<br><b>✥</b><br>S</div>
+            <div class="map-footer"><span>✧ MAP FRAGMENT I</span><span>Choose a destination ↗</span></div>
           </div>
-          <button class="text-button" id="visit-location">Choose this path ↗</button>
         </div>
-      </article>
 
-      <article class="decision-panel" id="decisions">
-        <div class="panel-heading">
-          <div>
-            <div class="eyebrow">THE CROSSROADS</div>
-            <h2>Your next move</h2>
+        <aside class="quest-panel panel" id="questPanel">
+          <div class="section-head">
+            <div><div class="eyebrow">ACTIVE QUEST</div><h3 id="questTitle">A New Beginning</h3></div>
+            <span class="quest-seal">✦</span>
           </div>
-          <span class="chapter-tag">01 / 03</span>
+          <div class="quest-image" id="questImage"></div>
+          <div class="quest-meta"><span>◷ Story event</span><span>✧ Adventure</span></div>
+          <p id="questDescription">A traveller arrives at Riverside Village.</p>
+          <div class="reward-line"><span>Possible reward</span><b id="questReward">+15 XP · +10 Wisdom</b></div>
+          <button class="primary-button full" id="travelBtn">Enter this chapter <span>→</span></button>
+        </aside>
+      </section>
+
+      <section class="decision panel" id="decision">
+        <div class="decision-art"><div class="art-rune">✧</div><span>THE MOMENT<br>OF CHOICE</span></div>
+        <div class="decision-copy">
+          <div class="eyebrow">YOUR NEXT DECISION</div>
+          <h3 id="decisionTitle">A stranger asks for your help.</h3>
+          <p id="decisionText">Choose your path carefully. Each action changes your journey.</p>
+          <div class="outcome" id="outcome"></div>
         </div>
-
-        <p class="panel-intro">You have 20 free hours this week. An internship opportunity is approaching, but your skills need work. What will you do?</p>
-
-        <form id="quest-form">
-          <label class="field-label" for="goal">YOUR LONG-TERM QUEST</label>
-          <input id="goal" name="goal" type="text" maxlength="100" placeholder="e.g. Earn a software internship">
-
-          <label class="field-label" for="situation">THE SITUATION</label>
-          <textarea id="situation" name="situation" rows="3" maxlength="500" placeholder="Describe the challenge you're facing...">I have 20 free hours this week and want to prepare for an internship.</textarea>
-
-          <div class="field-label choice-label">CHOOSE YOUR STRATEGY</div>
-
-          <label class="choice-card">
-            <input type="radio" name="choice" value="study" checked>
-            <span class="choice-symbol">✧</span>
-            <span class="choice-copy"><strong>Train at the Library</strong><small>Study fundamentals and sharpen your skills</small></span>
-            <span class="choice-arrow">↗</span>
-          </label>
-          <label class="choice-card">
-            <input type="radio" name="choice" value="project">
-            <span class="choice-symbol">⚒</span>
-            <span class="choice-copy"><strong>Forge a New Creation</strong><small>Build a project to prove what you can do</small></span>
-            <span class="choice-arrow">↗</span>
-          </label>
-          <label class="choice-card">
-            <input type="radio" name="choice" value="internship">
-            <span class="choice-symbol">♜</span>
-            <span class="choice-copy"><strong>Enter the Royal Court</strong><small>Apply now and learn from the process</small></span>
-            <span class="choice-arrow">↗</span>
-          </label>
-
-          <button class="gold-button simulate-button" type="submit">
-            <span>⚔</span> Simulate my destiny <span>→</span>
-          </button>
-          <p class="privacy-note">✦ A demonstration simulation — outcomes are illustrative, not predictions.</p>
-        </form>
-      </article>
-    </section>
-
-    <section class="outcome-panel hidden" id="outcome" aria-live="polite">
-      <div class="outcome-banner">
-        <span class="eyebrow">THE CHRONICLES HAVE TURNED</span>
-        <h2 id="outcome-title">A new chapter unfolds</h2>
-        <p id="outcome-summary"></p>
-      </div>
-      <div class="outcome-columns">
-        <div class="outcome-block">
-          <span class="eyebrow">THE REWARD</span>
-          <h3>What you gain</h3>
-          <p id="benefit"></p>
+        <div class="choices" id="choices">
+          <button class="choice-button recommended" data-choice="help"><span class="choice-icon">✧</span><span><b>Help the traveller</b><small>Gain wisdom · Spend energy</small></span><span>↗</span></button>
+          <button class="choice-button" data-choice="study"><span class="choice-icon">▤</span><span><b>Study at the archive</b><small>Build skills · Use some time</small></span><span>↗</span></button>
+          <button class="choice-button" data-choice="rest"><span class="choice-icon">☾</span><span><b>Rest until morning</b><small>Restore energy · Spend time</small></span><span>↗</span></button>
         </div>
-        <div class="outcome-block">
-          <span class="eyebrow">THE PRICE</span>
-          <h3>What you risk</h3>
-          <p id="risk"></p>
-        </div>
-        <div class="outcome-block">
-          <span class="eyebrow">YOUR REALM SHIFTS</span>
-          <h3>Stat changes</h3>
-          <p id="stats-change"></p>
-        </div>
-      </div>
-      <div class="outcome-actions">
-        <button class="gold-button" id="replay" type="button">Try another path ↻</button>
-        <span class="xp-reward">✦ <strong id="xp-gained">+100 XP</strong> earned</span>
-      </div>
-    </section>
+      </section>
 
-    <section class="chronicle-panel" id="chronicle">
-      <div class="panel-heading">
-        <div>
-          <div class="eyebrow">YOUR STORY, RECORDED</div>
-          <h2>The Chronicle</h2>
-        </div>
-        <span class="small-label">YOUR RECENT DECISIONS</span>
-      </div>
-      <div id="chronicle-list" class="chronicle-list">
-        <div class="empty-chronicle"><span>✧</span><p>Your first decision has yet to be written in the chronicles.</p></div>
-      </div>
-    </section>
+      <footer><span>✦ LIFEQUEST AI</span><span>YOUR LIFE. YOUR CHOICES. YOUR STORY.</span><span id="saveState">LOCAL SAVE READY</span></footer>
+    </main>
+  </div>
 
-    <footer class="footer">
-      <span class="brand-name">LIFEQUEST<span>AI</span></span>
-      <span>YOUR LIFE. YOUR CHOICES. YOUR LEGEND.</span>
-      <span>BUILT FOR THE NEXT GENERATION</span>
-    </footer>
-  </main>
+  <div class="toast" id="toast">
+    <span class="toast-icon">✦</span>
+    <div><b id="toastTitle">Quest updated</b><small id="toastText">Your story has changed.</small></div>
+    <button class="toast-x" id="toastClose">×</button>
+  </div>
 
-  <div class="reward-overlay hidden" id="reward" role="dialog" aria-modal="true" aria-labelledby="reward-title">
-    <div class="reward-card">
-      <div class="reward-sigil">✦</div>
-      <div class="eyebrow">THE REALM RECOGNISES YOUR EFFORT</div>
-      <h2 id="reward-title">A new chapter begins</h2>
-      <p id="reward-description">Your journey continues. Every choice teaches you something.</p>
-      <div class="reward-xp">+<span id="reward-xp">100</span> XP</div>
-      <button class="gold-button" id="close-reward" type="button">Return to the realm</button>
+  <div class="modal-backdrop" id="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModal">×</button>
+      <div class="modal-rune">✦</div>
+      <div class="eyebrow" id="modalEyebrow">CHAPTER UPDATED</div>
+      <h2 id="modalTitle">Your choice echoes.</h2>
+      <p id="modalText">A new path has opened in your story.</p>
+      <div class="modal-reward" id="modalReward">+15 XP</div>
+      <button class="primary-button" id="continueBtn">Continue <span>→</span></button>
     </div>
   </div>
 
