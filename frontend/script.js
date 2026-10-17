@@ -31,7 +31,132 @@ function loadGame() {
 const state = loadGame();
 
 
+function renderStats() {
+  const xpElement = $("#xp");
+  const wisdomElement = $("#wisdom");
+  const energyElement = $("#energy");
+  const goldElement = $("#gold");
+
+  if (xpElement) xpElement.textContent = state.xp;
+  if (wisdomElement) wisdomElement.textContent = state.wisdom;
+  if (energyElement) energyElement.textContent = state.energy;
+  if (goldElement) goldElement.textContent = state.gold;
+}
+
+
+
+
+function displayBackendScenario(game) {
+  if (!game) {
+    console.error("No game data received.");
+    return;
+  }
+
+  console.log("Displaying game:", game);
+
+  // Update the existing quest information.
+  const questTitle = $("#questTitle");
+  const questDescription = $("#questDescription");
+  const decisionTitle = $("#decisionTitle");
+  const decisionText = $("#decisionText");
+  const outcome = $("#outcome");
+  const container = $("#choices");
+
+  if (questTitle) {
+    questTitle.textContent = `DAY ${game.day ?? 1}`;
+  }
+
+  if (questDescription) {
+    questDescription.textContent = `Your goal: ${game.goal ?? "Your adventure awaits"}`;
+  }
+
+  if (decisionTitle) {
+    decisionTitle.textContent = "Your next decision";
+  }
+
+  if (decisionText) {
+    decisionText.textContent =
+      game.scenario ?? "Your next adventure is being prepared...";
+  }
+
+  if (outcome) {
+    outcome.textContent = "";
+  }
+
+  if (!container) {
+    console.error('Could not find the element with id="choices".');
+    return;
+  }
+
+  container.replaceChildren();
+
+  if (!Array.isArray(game.choices)) {
+    console.error("Expected game.choices to be an array:", game);
+    return;
+  }
+
+  game.choices.forEach((choice, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className =
+      `choice-button ${index === 0 ? "recommended" : ""}`;
+
+    const icon = document.createElement("span");
+    icon.className = "choice-icon";
+    icon.textContent = ["✧", "▤", "☾"][index] || "✦";
+
+    const copy = document.createElement("span");
+    const bold = document.createElement("b");
+    bold.textContent = choice;
+
+    const small = document.createElement("small");
+    small.textContent = "Choose this path";
+
+    copy.append(bold, small);
+
+    const arrow = document.createElement("span");
+    arrow.textContent = "↗";
+
+    button.append(icon, copy, arrow);
+
+    button.addEventListener("click", () => {
+      makeBackendChoice(choice);
+    });
+
+    container.appendChild(button);
+  });
+
+  // Synchronize the existing UI stats with the backend.
+  if (game.stats) {
+    state.xp = game.stats.skills;
+    state.wisdom = game.stats.happiness;
+    state.energy = game.stats.energy;
+    state.gold = game.stats.money;
+
+    if (typeof renderStats === "function") {
+      renderStats();
+    }
+  }
+}
+
+
+
+
+
 async function startBackendGame() {
+  const beginButton = $("#beginBtn");
+
+  if (currentGameId) {
+    displayBackendScenario(currentGame);
+    $("#decision").scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+    return currentGame;
+  }
+
+  if (beginButton) beginButton.disabled = true;
+
   try {
     const response = await fetch(`${API_BASE}/api/game/start`, {
       method: "POST",
@@ -48,18 +173,150 @@ async function startBackendGame() {
       throw new Error(`Backend returned ${response.status}`);
     }
 
-    currentGame = await response.json();
-    currentGameId = currentGame.game_id;
+    // The start endpoint returns the game object directly.
+    const game = await response.json();
+
+    if (!game.game_id) {
+      throw new Error("The backend response is missing game_id.");
+    }
+
+    currentGame = game;
+    currentGameId = game.game_id;
+
+    displayBackendScenario(currentGame);
 
     console.log("Backend game started:", currentGame);
-    notify("AI Connected", "Your LifeQuest adventure is ready.");
+    notify("Adventure started", "Your LifeQuest journey begins.");
+
+    $("#decision").scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
     return currentGame;
   } catch (error) {
     console.error("Could not start backend game:", error);
-    notify("Connection issue", "Check that your FastAPI backend is running.");
+    notify(
+      "Connection issue",
+      "Could not start the game. Check the backend and try again."
+    );
     return null;
+  } finally {
+    if (beginButton) beginButton.disabled = false;
   }
 }
+
+
+
+
+
+
+async function makeBackendChoice(choice) {
+  if (!currentGameId) {
+    notify("No active game", "Click Continue your journey first.");
+    return;
+  }
+
+  const buttons = $$("#choices button");
+  buttons.forEach(button => {
+    button.disabled = true;
+  });
+
+  try {
+    const response = await fetch(
+      `${API_BASE}/api/game/${currentGameId}/decision`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ choice })
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `Backend returned ${response.status}: ${errorText}`
+      );
+    }
+
+    const result = await response.json();
+
+    if (!result.game || !result.game.game_id) {
+      throw new Error("Decision response is missing game data.");
+    }
+
+    // Update the current game.
+    currentGame = result.game;
+    currentGameId = currentGame.game_id;
+
+    // Display the next day, story, and choices.
+    displayBackendScenario(currentGame);
+
+    // Sync backend stats with the frontend.
+    state.xp = currentGame.stats.skills;
+    state.wisdom = currentGame.stats.happiness;
+    state.energy = currentGame.stats.energy;
+    state.gold = currentGame.stats.money;
+
+    if (typeof renderStats === "function") {
+      renderStats();
+    }
+
+    // Display the consequence of the player's choice.
+    const outcome = $("#outcome");
+    if (outcome) {
+      outcome.textContent =
+        result.consequence ||
+        "Your decision has shaped your journey.";
+    }
+
+    // Record the decision in the local journal.
+    state.choicesMade = (state.choicesMade || 0) + 1;
+
+    if (!Array.isArray(state.history)) {
+      state.history = [];
+    }
+
+    state.history.unshift({
+      location: "LifeQuest Adventure",
+      note: `Day ${Math.max(1, currentGame.day - 1)}: ${choice}`,
+      title: "Your decision",
+      reward: result.consequence || "Decision recorded.",
+      date: new Date().toLocaleString()
+    });
+
+    state.history = state.history.slice(0, 50);
+
+    if (typeof saveGame === "function") {
+      saveGame();
+    }
+
+    console.log("Decision result:", result);
+    notify("Choice recorded", "Your adventure has progressed.");
+
+    // Scroll to the updated decision section.
+    $("#decision")?.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  } catch (error) {
+    console.error("Decision failed:", error);
+
+    buttons.forEach(button => {
+      button.disabled = false;
+    });
+
+    notify(
+      "Decision failed",
+      "Check the backend terminal and try again."
+    );
+  }
+}
+
+
 
 
 const places = {
@@ -136,17 +393,19 @@ function renderStats() {
   $("#energy").textContent = state.energy;
   $("#time").textContent = `${state.time}h`;
   $("#gold").textContent = state.gold;
-  $("#level").textContent = String(level()).padStart(2,"0");
+  $("#level").textContent = String(level()).padStart(2, "0");
 
   const progress = state.xp % 100;
   $("#xpBar").style.width = `${progress}%`;
   $("#xpProgress").textContent = `${progress} / 100 XP`;
 
   $("#questCount").textContent =
-    ["village","castle","forest","ruins"]
+    ["village", "castle", "forest", "ruins"]
       .filter(key => !state.completed.includes(key)).length;
 
-  $("#ruinsLabel").textContent = level() >= 4 ? "UNLOCKED" : "LOCKED · LV. 4";
+  $("#ruinsLabel").textContent =
+    level() >= 4 ? "UNLOCKED" : "LOCKED · LV. 4";
+
   saveGame();
 }
 
@@ -345,12 +604,12 @@ $$(".nav-item").forEach(button => {
 $("#beginBtn").addEventListener("click", async () => {
   const game = await startBackendGame();
 
-  if (!game) return;
-
-  $("#decision").scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
+  if (game) {
+    $("#decision").scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  }
 });
 
 
