@@ -50,22 +50,21 @@ Return only the scenario text.
         )
 
 
-def generate_consequence(game, choice, stat_changes):
-    """Ask Gemma to narrate the result of a decision."""
-    prompt = f"""
-You are the narrator of LifeQuestAI, a life simulator.
 
+def generate_consequence(game, choice, stat_changes):
+    """Generate a concise consequence for the player's decision."""
+    prompt = f"""
+You narrate LifeQuestAI, a student life simulator.
 Character: {game['character_name']}
 Goal: {game['goal']}
 Day: {game['day']}
-Player's decision: {choice}
-Actual stat changes: {stat_changes}
+Choice: {choice}
+Stat changes: {stat_changes}
 Updated stats: {game['stats']}
 
-Describe the realistic consequence of this decision
-in 2-3 sentences. Make it engaging and specific to
-the player's goal. Do not invent or change any stats.
-Return only the consequence text.
+Write a specific, engaging consequence in 1-2 short sentences.
+Connect it to the player's goal. Do not invent stats.
+Return only the consequence.
 """
     try:
         return generate_text(prompt)
@@ -73,9 +72,9 @@ Return only the consequence text.
         print(f"Consequence generation failed: {error}")
         return (
             f"You chose to {choice.lower()}. "
-            "Your actions have shaped today's progress "
-            "toward your goal."
+            "Your decision shapes your progress toward your goal."
         )
+
 
 
 @router.post("/start")
