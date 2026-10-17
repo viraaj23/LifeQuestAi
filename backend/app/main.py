@@ -10,11 +10,15 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
+<<<<<<< HEAD
     allow_origins=[
         "http://127.0.0.1:5500",
         "http://localhost:5500",
     ],
     allow_credentials=True,
+=======
+    allow_origins=["*"],
+>>>>>>> 196d8c0 (Fix AI service, add CORS, update frontend)
     allow_methods=["*"],
     allow_headers=["*"],
 )

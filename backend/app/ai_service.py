@@ -1,10 +1,13 @@
 
 import os
 
+import os
+from pathlib import Path
+
 from dotenv import load_dotenv
 from google import genai
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 API_KEY = os.getenv("GEMMA_API_KEY")
 MODEL_NAME = os.getenv(
