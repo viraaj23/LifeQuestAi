@@ -583,3 +583,14 @@ selectPlace(state.selected, true);
 setTab("map");
  
 
+const heroBtn = [...document.querySelectorAll("button, a")]
+  .find(el => el.textContent.includes("Continue your journey"));
+
+if (heroBtn && heroBtn.id !== "beginBtn") {
+  heroBtn.addEventListener("click", async event => {
+    event.preventDefault();
+    const game = await startBackendGame();
+    if (!game) return;
+    $("#decision")?.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+}
