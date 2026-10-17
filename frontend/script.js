@@ -1,3 +1,8 @@
+const API_BASE = "http://127.0.0.1:8000";
+
+let currentGameId = null;
+let currentGame = null;
+
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
@@ -24,6 +29,38 @@ function loadGame() {
 }
 
 const state = loadGame();
+
+
+async function startBackendGame() {
+  try {
+    const response = await fetch(`${API_BASE}/api/game/start`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        character_name: "LifeQuest Hero",
+        goal: "Grow skills, wisdom, and complete quests"
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Backend returned ${response.status}`);
+    }
+
+    currentGame = await response.json();
+    currentGameId = currentGame.game_id;
+
+    console.log("Backend game started:", currentGame);
+    notify("AI Connected", "Your LifeQuest adventure is ready.");
+    return currentGame;
+  } catch (error) {
+    console.error("Could not start backend game:", error);
+    notify("Connection issue", "Check that your FastAPI backend is running.");
+    return null;
+  }
+}
+
 
 const places = {
   village:{
@@ -304,9 +341,18 @@ $$(".nav-item").forEach(button => {
   });
 });
 
-$("#beginBtn").addEventListener("click",() => {
-  $("#decision").scrollIntoView({behavior:"smooth",block:"center"});
+
+$("#beginBtn").addEventListener("click", async () => {
+  const game = await startBackendGame();
+
+  if (!game) return;
+
+  $("#decision").scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
 });
+
 
 $("#travelBtn").addEventListener("click",() => {
   if (state.selected === "ruins" && level() < 4) {

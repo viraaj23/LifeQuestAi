@@ -1,15 +1,11 @@
 
+from dotenv import load_dotenv
 from app.ai_service import generate_text
 
-prompt = """
-You are the narrator of LifeQuestAI.
-
-A college student wants to improve their programming skills.
-Create one short life scenario and provide three possible choices.
-Keep the response under 120 words.
-"""
+load_dotenv()
 
 try:
-    print(generate_text(prompt))
+    result = generate_text("Write one short sentence about learning programming.")
+    print("SUCCESS:", result)
 except Exception as error:
-    print(f"Gemma test failed: {error}")
+    print("FAILED:", type(error).__name__, error)

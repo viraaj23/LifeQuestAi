@@ -30,20 +30,15 @@ class DecisionRequest(BaseModel):
 
 def generate_scenario(game):
     """Ask Gemma to create a scenario for the player."""
+    
     prompt = f"""
-You are the narrator of LifeQuestAI, an interactive life simulator.
-
+Create a realistic 2-sentence life simulator scenario.
 Character: {game['character_name']}
 Goal: {game['goal']}
-Current day: {game['day']}
-Stats: {game['stats']}
-
-Write one engaging, realistic scenario for this student.
-Use 2-4 sentences. Present a meaningful challenge related
-to their goal. Do not provide the choices; the application
-will display them separately.
+Day: {game['day']}
 Return only the scenario text.
 """
+
     try:
         return generate_text(prompt)
     except Exception as error:
